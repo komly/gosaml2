@@ -1,7 +1,6 @@
 package saml2
 
 import (
-	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
@@ -44,6 +43,7 @@ const (
 const (
 	MethodAES128GCM = "http://www.w3.org/2009/xmlenc11#aes128-gcm"
 	MethodAES128CBC = "http://www.w3.org/2001/04/xmlenc#aes128-cbc"
+	MethodAES256CBC = "http://www.w3.org/2001/04/xmlenc#aes256-cbc"
 )
 
 //Well-known hash methods
@@ -55,20 +55,6 @@ const (
 
 //DecryptSymmetricKey returns the private key contained in the EncryptedKey document
 func (ek *EncryptedKey) DecryptSymmetricKey(cert tls.Certificate) (cipher.Block, error) {
-
-	encCert, err := xmlBytes(ek.X509Data)
-	if err != nil {
-		return nil, fmt.Errorf("error getting certificate from encryptedkey: %v", err)
-	}
-
-	if len(cert.Certificate) < 1 {
-		return nil, fmt.Errorf("decryption tls.Certificate has no public certs attached")
-	}
-
-	if !bytes.Equal(cert.Certificate[0], encCert) {
-		return nil, fmt.Errorf("key decryption attempted with mismatched cert: %#v != %#v",
-			string(cert.Certificate[0]), string(encCert))
-	}
 
 	cipherText, err := xmlBytes(ek.CipherValue)
 	if err != nil {
