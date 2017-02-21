@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/beevik/etree"
-	dsig "github.com/russellhaering/goxmldsig"
+	dsig "github.com/komly/goxmldsig"
 )
 
 func (sp *SAMLServiceProvider) validationContext() *dsig.ValidationContext {

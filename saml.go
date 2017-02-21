@@ -3,7 +3,7 @@ package saml2
 import (
 	"sync"
 
-	dsig "github.com/russellhaering/goxmldsig"
+	dsig "github.com/komly/goxmldsig"
 )
 
 const issueInstantFormat = "2006-01-02T15:04:05Z"
